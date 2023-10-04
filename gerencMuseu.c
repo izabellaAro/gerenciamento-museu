@@ -9,7 +9,7 @@ int main()
     return 0;
 }
 
-int opcaoExposicao, decisao;
+int opcaoExposicao, decisao, tipoIngresso, pagamento;
 
 void menu()
 {  
@@ -54,11 +54,11 @@ void menu()
 
 }
 
-    void retornarMenu() {
-        getchar();
-        getchar();
-        system("cls ||clear");
-        menu();
+void retornarMenu() {
+    getchar();
+    getchar();
+    system("cls ||clear");
+    menu();
 }
 
 void sair(){
@@ -71,7 +71,36 @@ void opcaoDecisao(){
     scanf("%d", &decisao);
 
     if(decisao == 1) { 
-        printf("Página de pagamento");}
+        system("cls || clear");
+        compraIngresso();
+    }
     else {
-        retornarMenu();}
+        retornarMenu();
+    }
+}
+
+void compraIngresso(){
+    printf("Qual o tipo de ingresso deseja comprar?\n\n1.Inteira\n2.Meia(estudante/professor/idoso)\n3.Isenção\n\n");
+    scanf("%d", &tipoIngresso);
+
+    switch(tipoIngresso){
+
+        case 1:
+            printf("\nSiga com o pagamento da entrada Inteira no valor de R$15,00\n\n");
+            formaPagamento();
+        break;    
+    }
+}
+
+void formaPagamento(){
+    system("cls || clear");
+    printf("Selecione a forma de pagamento:\n\n1.Cartão de crédito\n2.Cartão de débito\n\n");
+    scanf("%d", &pagamento);
+    if(pagamento == 1){
+        printf("\nSiga com o pagamento via cartão de crédito pela máquina de cartões!\n");
+    }
+    else{
+        printf("\nSiga com o pagamento via cartão de débito pela máquina de cartões!\n");
+    }
+    printf("\nPagamento realizado com sucesso :)");
 }
