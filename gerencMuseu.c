@@ -27,22 +27,22 @@ void menu()
     switch(opcaoExposicao)
     {
         case 1:
-            printf("\nResumo da Obra 1\n\n");
+            printf("\nExplore a revolução artística da Semana de Arte Moderna de 1922. Descubra obras inovadoras que marcaram o início do movimento modernista no Brasil. Venha vivenciar a transformação cultural que moldou a arte brasileira. \n\n");
             opcaoDecisao();
         break;
         
          case 2:
-            printf("\nResumo da Obra 2\n\n");
+            printf("\nComemore os 150 anos de Santos Dumont conosco! Conheça a vida e as inovações do pioneiro da aviação brasileira. Visite nossa exposição e celebre o legado de um dos maiores inventores da história. \n\n");
             opcaoDecisao();
         break;
 
          case 3:
-            printf("\nResumo da Obra 3\n\n");
+            printf("\nTestemunhe os melhores atletas do mundo competindo em um dos eventos esportivos mais prestigiados do planeta. Junte-se a nós e faça parte dessa celebração esportiva única. Reserve seu lugar para experienciar a magia olímpica em Paris!\n\n");
             opcaoDecisao();
         break;
 
          case 4:
-            printf("\nResumo da Obra 4\n\n");
+            printf("\nViaje pela história da tecnologia conosco! Descubra os avanços revolucionários que moldaram o mundo moderno. Da invenção da roda aos avanços da era digital, explore a evolução que impulsionou a sociedade. \n\n");
            opcaoDecisao();
         break;
 
