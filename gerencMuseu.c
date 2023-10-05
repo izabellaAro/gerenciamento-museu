@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 #include <TIME.H>
 
 int main()
@@ -10,8 +11,10 @@ int main()
     return 0;
 }
 
-int opcaoExposicao, decisao, tipoIngresso, pagamento;
-char nomeVisitante;
+
+int opcaoExposicao, decisao, tipoIngresso, pagamento, codIngresso;
+char nomeVisitante[50];
+
 
 void menu()
 {  
@@ -29,7 +32,7 @@ void menu()
         case 1:
             printf("\nExplore a revolução artística da Semana de Arte Moderna de 1922. Descubra obras inovadoras que marcaram o início do movimento modernista no Brasil. Venha vivenciar a transformação cultural que moldou a arte brasileira. \n\n");
             opcaoDecisao();
-        break;
+            break;
         
          case 2:
             printf("\nComemore os 150 anos de Santos Dumont conosco! Conheça a vida e as inovações do pioneiro da aviação brasileira. Visite nossa exposição e celebre o legado de um dos maiores inventores da história. \n\n");
@@ -91,16 +94,19 @@ void compraIngresso(){
 
         case 1:
             printf("\nSiga com o pagamento da entrada Inteira no valor de R$15,00\n\n");
+            sleep(5);
             formaPagamento();
         break;    
 
         case 2:
             printf("\nSiga com o pagamento da entrada Meia no valor de R$7,50\n\n");
+            sleep(5);
             formaPagamento();
         break;
 
         case 3:
             printf("Siga com a emissão do seu ingresso e apresente o comprovante de isenção na entrada da exposição escolhida :)");
+            sleep(5);
         break; 
     }
 
@@ -117,13 +123,31 @@ void formaPagamento(){
     else{
         printf("\nSiga com o pagamento via cartão de débito pela máquina de cartões!\n");
     }
+    sleep(3);
     printf("\nPagamento realizado com sucesso :)");
-    sleep(51);
+    sleep(5);
 }
 
 void gerarIngresso(){
     system("cls || clear");
     printf("Por gentileza, informe seu nome e sobrenome: ");
-    scanf("%s", &nomeVisitante);
+    scanf("%s", nomeVisitante);
+    FILE *arquivoInfoIngresso;
+    arquivoInfoIngresso = fopen("Arquivo.txt", "a");
+   
+    srand(time(NULL)); 
+    codIngresso = rand() % 10000;
+    printf("\nO código do seu ingresso é: %d", codIngresso); 
+    fprintf(arquivoInfoIngresso, "%s, %d, %d\n", nomeVisitante, 1, codIngresso);
+    fclose(arquivoInfoIngresso);
+
     printf("\n\nQue a sua visita seja incrível!\n\n");
+}
+
+void validaIngresso(){
+    system("cls || clear");
+    printf("Por gentileza, informe seu nome e sobrenome: ");
+    scanf("%s", &nomeVisitante);
+    printf("\n\nInforme o código do ingresso: ");
+    scanf("%d", &codIngresso);
 }
