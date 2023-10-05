@@ -58,7 +58,6 @@ void menu()
             retornarMenu();
             
     }
-
 }
 
 void retornarMenu() {
@@ -110,7 +109,9 @@ void compraIngresso(){
         break; 
     }
 
-    gerarIngresso();    
+    gerarIngresso();   
+    validaIngresso();
+ 
 }
 
 void formaPagamento(){
@@ -125,12 +126,12 @@ void formaPagamento(){
     }
     sleep(3);
     printf("\nPagamento realizado com sucesso :)");
-    sleep(5);
+    sleep(4);
 }
 
 void gerarIngresso(){
     system("cls || clear");
-    printf("Por gentileza, informe seu nome e sobrenome: ");
+    printf("Por gentileza, informe seu nome para gerar seu ingresso: ");
     scanf("%s", nomeVisitante);
     FILE *arquivoInfoIngresso;
     arquivoInfoIngresso = fopen("Arquivo.txt", "a");
@@ -142,12 +143,74 @@ void gerarIngresso(){
     fclose(arquivoInfoIngresso);
 
     printf("\n\nQue a sua visita seja incrível!\n\n");
+    sleep(2);
 }
 
 void validaIngresso(){
     system("cls || clear");
-    printf("Por gentileza, informe seu nome e sobrenome: ");
+    printf("-- Validador de Ingressos --");
+    printf("\n\nPor gentileza, informe seu nome: ");
     scanf("%s", &nomeVisitante);
-    printf("\n\nInforme o código do ingresso: ");
+    printf("\nInforme o código do ingresso: ");
     scanf("%d", &codIngresso);
+    encontrarIngresso(codIngresso);
+}
+
+struct Ingresso {
+    char nome[50];
+    int valido;
+    int codigo;
+};
+
+void encontrarIngresso(int codIngresso){
+    FILE *arquivo;
+    arquivo = fopen("Arquivo.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return;
+    }
+    
+    struct Ingresso ingressoEncontrado;
+    int ingressoEncontradoFlag = 0; 
+
+    char linha[100]; 
+
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char *token = strtok(linha, ",");
+        if(token == NULL){
+            continue;
+        }
+        strncpy(ingressoEncontrado.nome, token, sizeof(ingressoEncontrado.nome));
+        token = strtok(NULL, ",");
+
+        if(token == NULL){
+            continue;
+        }
+
+        ingressoEncontrado.valido = atoi(token);
+        token = strtok(NULL, ",");
+
+        if (token == NULL) {
+            continue;
+        }
+        ingressoEncontrado.codigo = atoi(token);
+
+        if(ingressoEncontrado.codigo == codIngresso){
+            ingressoEncontradoFlag = 1;
+        }       
+
+    }
+
+    fclose(arquivo);
+
+    if (ingressoEncontradoFlag) {
+        printf("\nIngresso encontrado:\n");
+        printf("Nome: %s\n", ingressoEncontrado.nome);
+        printf("Ingresso valido?: %d\n", ingressoEncontrado.valido);
+        printf("Codigo: %d\n", ingressoEncontrado.codigo);
+    } 
+        else {
+        printf("\nIngresso com o código '%d' não encontrado.\n", codIngresso);
+    }
 }
