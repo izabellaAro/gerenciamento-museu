@@ -1,89 +1,18 @@
+#include "ingresso.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
 #include <TIME.H>
 
-int main()
-{
-    setlocale(LC_ALL,"Portuguese");
-    menu();
-    return 0;
-}
-
-
-int opcaoExposicao, decisao, tipoIngresso, pagamento, codIngresso;
+int tipoIngresso, pagamento, codIngresso;
 char nomeVisitante[50];
 
-
-void menu()
-{  
-    printf("\n\nMuseu Ada Lovelace\n\n");
-    
-    printf("Obras em cartaz:\n");
-    printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olímpicos Paris 2024; \n4. História da tecnologia;\n0. Sair.\n\n");
-
-    scanf("%d", &opcaoExposicao);
-
-    system("cls ||clear");
-
-    switch(opcaoExposicao)
-    {
-        case 1:
-            printf("\nExplore a revolução artística da Semana de Arte Moderna de 1922. Descubra obras inovadoras que marcaram o início do movimento modernista no Brasil. Venha vivenciar a transformação cultural que moldou a arte brasileira. \n\n");
-            opcaoDecisao();
-            break;
-        
-         case 2:
-            printf("\nComemore os 150 anos de Santos Dumont conosco! Conheça a vida e as inovações do pioneiro da aviação brasileira. Visite nossa exposição e celebre o legado de um dos maiores inventores da história. \n\n");
-            opcaoDecisao();
-        break;
-
-         case 3:
-            printf("\nTestemunhe os melhores atletas do mundo competindo em um dos eventos esportivos mais prestigiados do planeta. Junte-se a nós e faça parte dessa celebração esportiva única. Reserve seu lugar para experienciar a magia olímpica em Paris!\n\n");
-            opcaoDecisao();
-        break;
-
-         case 4:
-            printf("\nViaje pela história da tecnologia conosco! Descubra os avanços revolucionários que moldaram o mundo moderno. Da invenção da roda aos avanços da era digital, explore a evolução que impulsionou a sociedade. \n\n");
-           opcaoDecisao();
-        break;
-
-        case 0:
-            sair();
-        break;
-
-        default:
-            printf("Por gentileza, digite uma opção válida");
-            retornarMenu();
-            
-    }
-}
-
-void retornarMenu() {
-    getchar();
-    getchar();
-    system("cls ||clear");
-    menu();
-}
-
-void sair(){
-    printf("Obrigado por visitar nosso museu. Volte logo :)\n");
-    system("pause");
-}
-
-void opcaoDecisao(){
-    printf("Para adquirir o ingresso, digite 1. \nPara voltar ao menu aperte qualquer tecla.\n\n");
-    scanf("%d", &decisao);
-
-    if(decisao == 1) { 
-        system("cls || clear");
-        compraIngresso();
-    }
-    else {
-        retornarMenu();
-    }
-}
+struct Ingresso {
+    char nome[50];
+    int valido;
+    int codigo;
+};
 
 void compraIngresso(){
     printf("Qual o tipo de ingresso deseja comprar?\n\n1.Inteira\n2.Meia(estudante/professor/idoso)\n3.Isenção\n\n");
@@ -111,7 +40,6 @@ void compraIngresso(){
 
     gerarIngresso();   
     validaIngresso();
- 
 }
 
 void formaPagamento(){
@@ -156,12 +84,6 @@ void validaIngresso(){
     encontrarIngresso(codIngresso);
 }
 
-struct Ingresso {
-    char nome[50];
-    int valido;
-    int codigo;
-};
-
 void encontrarIngresso(int codIngresso){
     FILE *arquivo;
     arquivo = fopen("Arquivo.txt", "r");
@@ -177,6 +99,7 @@ void encontrarIngresso(int codIngresso){
     char linha[100]; 
 
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+
         char *token = strtok(linha, ",");
         if(token == NULL){
             continue;
@@ -198,6 +121,7 @@ void encontrarIngresso(int codIngresso){
 
         if(ingressoEncontrado.codigo == codIngresso){
             ingressoEncontradoFlag = 1;
+            break;
         }       
 
     }
