@@ -5,13 +5,14 @@
 #include <string.h>
 #include <TIME.H>
 
-int tipoIngresso, pagamento, codIngresso;
+int tipoIngresso, pagamento, codIngresso, opcaoExposicao;
 char nomeVisitante[50];
 
 struct Ingresso {
     char nome[50];
     int valido;
     int codigo;
+    int opcaoExposicao;
 };
 
 void compraIngresso(){
@@ -67,7 +68,7 @@ void gerarIngresso(){
     srand(time(NULL)); 
     codIngresso = rand() % 10000;
     printf("\nO código do seu ingresso é: %d", codIngresso); 
-    fprintf(arquivoInfoIngresso, "%s, %d, %d\n", nomeVisitante, 1, codIngresso);
+    fprintf(arquivoInfoIngresso, "%s, %d, %d, %d\n", nomeVisitante, 1, codIngresso, opcaoExposicao);
     fclose(arquivoInfoIngresso);
 
     printf("\n\nQue a sua visita seja incrível!\n\n");
@@ -81,6 +82,8 @@ void validaIngresso(){
     scanf("%s", &nomeVisitante);
     printf("\nInforme o código do ingresso: ");
     scanf("%d", &codIngresso);
+    printf("\nInforme o número da exposição escolhida: ");
+    scanf("%d", &opcaoExposicao);
     encontrarIngresso(codIngresso);
 }
 
@@ -117,24 +120,33 @@ void encontrarIngresso(int codIngresso){
         if (token == NULL) {
             continue;
         }
-        ingressoEncontrado.codigo = atoi(token);
 
+        ingressoEncontrado.codigo = atoi(token);
+        token = strtok(NULL, ",");
+
+        ingressoEncontrado.opcaoExposicao = atoi(token);
+     
         if(ingressoEncontrado.codigo == codIngresso){
             ingressoEncontradoFlag = 1;
             break;
-        }       
+        }
 
     }
 
     fclose(arquivo);
-
-    if (ingressoEncontradoFlag) {
+    
+    if (!ingressoEncontradoFlag){
+    	printf("\nIngresso com o código '%d' não encontrado.\n", codIngresso);
+	} else if(ingressoEncontradoFlag && !ingressoEncontrado.valido) {
+		printf("\nIngresso com o código '%d' invalido.\n", codIngresso);
+	} else if(ingressoEncontradoFlag && ingressoEncontrado.opcaoExposicao != opcaoExposicao) {
+		printf("\nIngresso com o código '%d' invalido para esta exposicao.\n", codIngresso);
+	} else {
         printf("\nIngresso encontrado:\n");
         printf("Nome: %s\n", ingressoEncontrado.nome);
         printf("Ingresso valido?: %d\n", ingressoEncontrado.valido);
         printf("Codigo: %d\n", ingressoEncontrado.codigo);
-    } 
-        else {
-        printf("\nIngresso com o código '%d' não encontrado.\n", codIngresso);
+        printf("Numero da exposição escolhida: %d\n", opcaoExposicao);
     }
+
 }
