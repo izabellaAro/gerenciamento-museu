@@ -4,6 +4,6 @@
 int main()
 {
    setlocale(LC_ALL,"Portuguese");
-   exibeOpcoes();
+   selecionaModo();
    return 0;
 }

@@ -1,5 +1,5 @@
 void compraIngresso();
 void formaPagamento();
 void gerarIngresso();
-void validaIngresso();
+void validaIngresso(int exposicao);
 void encontrarIngresso(int codIngresso);

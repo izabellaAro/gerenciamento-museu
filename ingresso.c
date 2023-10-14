@@ -39,8 +39,7 @@ void compraIngresso(){
         break; 
     }
 
-    gerarIngresso();   
-    validaIngresso();
+    gerarIngresso(); 
 }
 
 void formaPagamento(){
@@ -75,15 +74,16 @@ void gerarIngresso(){
     sleep(2);
 }
 
-void validaIngresso(){
+void validaIngresso(int exposicao){
     system("cls || clear");
     printf("-- Validador de Ingressos --");
     printf("\n\nPor gentileza, informe seu nome: ");
     scanf("%s", &nomeVisitante);
     printf("\nInforme o código do ingresso: ");
     scanf("%d", &codIngresso);
-    printf("\nInforme o número da exposição escolhida: ");
-    scanf("%d", &opcaoExposicao);
+    
+    opcaoExposicao = exposicao;
+
     encontrarIngresso(codIngresso);
 }
 

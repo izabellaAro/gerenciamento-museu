@@ -3,4 +3,6 @@ output
 
 *.exe
 *.txt
+!resumos/*.txt
+
 *.o
