@@ -9,7 +9,7 @@ void selecionaModo()
 {
     int opcaoModo, opcaoObraSelecionada;
 
-    printf("Selecione o modo de operção do sistema:\n");
+    printf("\nSelecione o modo de operção do sistema:\n");
     printf("1. Venda de Ingressos; \n2. Validador de Ingressos; \n3. Exibição de Obras.\n\n");
 
     scanf("%d", &opcaoModo);
@@ -25,6 +25,13 @@ void selecionaModo()
             printf("Selecione uma exposicao:\n");
             printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olímpicos Paris 2024; \n4. História da tecnologia;\n0. Sair.\n\n");
             scanf("%d", &opcaoObraSelecionada);
+
+            if (opcaoObraSelecionada < 0 || opcaoObraSelecionada > 3){
+                printf("Exposicao inválida:\n");
+                sleep(2);
+                system("cls ||clear");
+                selecionaModo();    
+            }
 
             validaIngresso(opcaoObraSelecionada);
             break;
@@ -44,7 +51,7 @@ void selecionaModo()
 
 void exibeOpcoes()
 {  
-    printf("\n\nMuseu Ada Lovelace\n\n");
+    printf("\nMuseu Ada Lovelace\n\n");
     
     printf("Obras em cartaz:\n");
     printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olímpicos Paris 2024; \n4. História da tecnologia;\n0. Sair.\n\n");

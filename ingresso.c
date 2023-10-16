@@ -1,4 +1,5 @@
 #include "ingresso.h"
+#include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -40,6 +41,9 @@ void compraIngresso(){
     }
 
     gerarIngresso(); 
+
+    system("cls ||clear");
+    exibeOpcoes();
 }
 
 void formaPagamento(){
@@ -85,6 +89,8 @@ void validaIngresso(int exposicao){
     opcaoExposicao = exposicao;
 
     encontrarIngresso(codIngresso);
+    sleep(2);
+    validaIngresso(exposicao);
 }
 
 void encontrarIngresso(int codIngresso){
@@ -95,7 +101,7 @@ void encontrarIngresso(int codIngresso){
         printf("Erro ao abrir o arquivo para leitura.\n");
         return;
     }
-    
+    	
     struct Ingresso ingressoEncontrado;
     int ingressoEncontradoFlag = 0; 
 
@@ -125,8 +131,8 @@ void encontrarIngresso(int codIngresso){
         token = strtok(NULL, ",");
 
         ingressoEncontrado.opcaoExposicao = atoi(token);
-     
-        if(ingressoEncontrado.codigo == codIngresso){
+
+        if(ingressoEncontrado.codigo == codIngresso && strcmp(ingressoEncontrado.nome, nomeVisitante) == 0){
             ingressoEncontradoFlag = 1;
             break;
         }

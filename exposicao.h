@@ -1,2 +1,3 @@
 void exibirResumoObra(int obra);
-void exibeResumoObra(char* nomeArquivo);
+void lerArquivoResumoObra(char* nomeArquivo);
+void questionario();
