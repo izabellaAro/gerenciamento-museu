@@ -39,7 +39,7 @@ void compraIngresso(){
             sleep(5);
         break; 
     }
-
+ 
     gerarIngresso(); 
 
     system("cls ||clear");
@@ -61,21 +61,46 @@ void formaPagamento(){
     sleep(4);
 }
 
-void gerarIngresso(){
+void gerarIngresso()
+{
     system("cls || clear");
+
+    struct Ingresso ingresso;
+    int retorno;
+    FILE *arq = fopen("ingressos.txt", "ab");
+
+    if (arq == NULL)
+    {
+        printf("Erro ao abrir arquivo");
+        return;
+    }
+
     printf("Por gentileza, informe seu nome para gerar seu ingresso: ");
     scanf("%s", nomeVisitante);
-    FILE *arquivoInfoIngresso;
-    arquivoInfoIngresso = fopen("Arquivo.txt", "a");
-   
+
     srand(time(NULL)); 
     codIngresso = rand() % 10000;
-    printf("\nO código do seu ingresso é: %d", codIngresso); 
-    fprintf(arquivoInfoIngresso, "%s, %d, %d, %d\n", nomeVisitante, 1, codIngresso, opcaoExposicao);
-    fclose(arquivoInfoIngresso);
 
-    printf("\n\nQue a sua visita seja incrível!\n\n");
-    sleep(2);
+    strcpy(ingresso.nome, nomeVisitante);
+    ingresso.codigo = codIngresso;
+    ingresso.valido = 1;
+    ingresso.opcaoExposicao = opcaoExposicao;
+    
+    retorno = fwrite(&ingresso, sizeof(ingresso), 1, arq);
+
+    if (retorno == 1)
+    {
+        fclose(arq);
+        
+        printf("\nO código do seu ingresso é: %d", codIngresso);
+        printf("\n\nQue a sua visita seja incrível!\n\n");
+        sleep(2);
+    }
+    else
+    {
+        fclose (arq);
+        printf("\n Falha ao gravar dados.");
+    }
 }
 
 void validaIngresso(int exposicao){
@@ -93,66 +118,48 @@ void validaIngresso(int exposicao){
     validaIngresso(exposicao);
 }
 
-void encontrarIngresso(int codIngresso){
-    FILE *arquivo;
-    arquivo = fopen("Arquivo.txt", "r");
-
-    if (arquivo == NULL) {
+void encontrarIngresso(int codIngresso)
+{
+    FILE *arq = fopen("ingressos.txt", "r+b");
+    if (arq == NULL)
+    {
         printf("Erro ao abrir o arquivo para leitura.\n");
-        return;
-    }
-    	
-    struct Ingresso ingressoEncontrado;
-    int ingressoEncontradoFlag = 0; 
-
-    char linha[100]; 
-
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-
-        char *token = strtok(linha, ",");
-        if(token == NULL){
-            continue;
-        }
-        strncpy(ingressoEncontrado.nome, token, sizeof(ingressoEncontrado.nome));
-        token = strtok(NULL, ",");
-
-        if(token == NULL){
-            continue;
-        }
-
-        ingressoEncontrado.valido = atoi(token);
-        token = strtok(NULL, ",");
-
-        if (token == NULL) {
-            continue;
-        }
-
-        ingressoEncontrado.codigo = atoi(token);
-        token = strtok(NULL, ",");
-
-        ingressoEncontrado.opcaoExposicao = atoi(token);
-
-        if(ingressoEncontrado.codigo == codIngresso && strcmp(ingressoEncontrado.nome, nomeVisitante) == 0){
-            ingressoEncontradoFlag = 1;
-            break;
-        }
-
     }
 
-    fclose(arquivo);
-    
-    if (!ingressoEncontradoFlag){
-    	printf("\nIngresso com o código '%d' não encontrado.\n", codIngresso);
-	} else if(ingressoEncontradoFlag && !ingressoEncontrado.valido) {
-		printf("\nIngresso com o código '%d' invalido.\n", codIngresso);
-	} else if(ingressoEncontradoFlag && ingressoEncontrado.opcaoExposicao != opcaoExposicao) {
-		printf("\nIngresso com o código '%d' invalido para esta exposicao.\n", codIngresso);
-	} else {
-        printf("\nIngresso encontrado:\n");
-        printf("Nome: %s\n", ingressoEncontrado.nome);
-        printf("Ingresso valido?: %d\n", ingressoEncontrado.valido);
-        printf("Codigo: %d\n", ingressoEncontrado.codigo);
-        printf("Numero da exposição escolhida: %d\n", opcaoExposicao);
+    struct Ingresso ingresso;
+    int encontrado = 0;
+
+    while (fread(&ingresso, sizeof(ingresso), 1, arq))
+    {
+        if (ingresso.codigo == codIngresso && strcmp(ingresso.nome, nomeVisitante) == 0)
+        {
+            encontrado = 1;
+
+            if (!ingresso.valido)
+            {
+                printf("\nIngresso com o código '%d' invalido.\n", codIngresso);
+            } else if(ingresso.opcaoExposicao != opcaoExposicao) {
+		        printf("\nIngresso com o código '%d' invalido para esta exposicao.\n", codIngresso);
+	        } else {
+                printf("\nIngresso encontrado:\n");
+                printf("Nome: %s\n", ingresso.nome);
+                printf("Ingresso valido?: %d\n", ingresso.valido);
+                printf("Codigo: %d\n", ingresso.codigo);
+                printf("Numero da exposição escolhida: %d\n", opcaoExposicao);
+
+                fseek(arq, sizeof(struct Ingresso)*-1, SEEK_CUR);
+
+                ingresso.valido = 0;
+
+                fwrite(&ingresso, sizeof(ingresso), 1, arq);
+                fseek(arq, sizeof(ingresso)* 0, SEEK_END);
+            }
+        }
     }
 
+    if (!encontrado)
+    {
+        printf("\nIngresso com o código '%d' não encontrado.\n", codIngresso);
+    }
+    fclose(arq);
 }
