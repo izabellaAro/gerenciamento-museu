@@ -26,7 +26,7 @@ void selecionaModo()
             printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olímpicos Paris 2024; \n4. História da tecnologia;\n0. Sair.\n\n");
             scanf("%d", &opcaoObraSelecionada);
 
-            if (opcaoObraSelecionada < 0 || opcaoObraSelecionada > 3){
+            if (opcaoObraSelecionada < 0 || opcaoObraSelecionada > 4){
                 printf("Exposicao inválida:\n");
                 sleep(2);
                 system("cls ||clear");
