@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "ingresso.h"
+#include "questionario.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,8 +10,8 @@ void selecionaModo()
 {
     int opcaoModo, opcaoObraSelecionada;
 
-    printf("\nSelecione o modo de operção do sistema:\n");
-    printf("1. Venda de Ingressos; \n2. Validador de Ingressos; \n3. Exibição de Obras.\n\n");
+    printf("\nSelecione o modo de operacao do sistema:\n");
+    printf("1. Venda de Ingressos; \n2. Validador de Ingressos; \n3. Exibicao de Obras; \n4. Gerar Relatorio de Questionarios\n\n");
 
     scanf("%d", &opcaoModo);
 
@@ -23,11 +24,11 @@ void selecionaModo()
             break;
         case 2:
             printf("Selecione uma exposicao:\n");
-            printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olímpicos Paris 2024; \n4. História da tecnologia;\n0. Sair.\n\n");
+            printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olimpicos Paris 2024; \n4. Historia da tecnologia;\n0. Sair.\n\n");
             scanf("%d", &opcaoObraSelecionada);
 
             if (opcaoObraSelecionada < 0 || opcaoObraSelecionada > 4){
-                printf("Exposicao inválida:\n");
+                printf("Exposicao invalida:\n");
                 sleep(2);
                 system("cls ||clear");
                 selecionaModo();    
@@ -37,13 +38,17 @@ void selecionaModo()
             break;
         case 3:
             printf("Selecione uma exposicao:\n");
-            printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olímpicos Paris 2024; \n4. História da tecnologia;\n0. Sair.\n\n");
+            printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olimpicos Paris 2024; \n4. Historia da tecnologia;\n0. Sair.\n\n");
             
             scanf("%d", &opcaoObraSelecionada);
             exibirResumoObra(opcaoObraSelecionada);
             break;
+
+        case 4:
+            gerarRelatorio();
+            break;
         default:
-            printf("Por gentileza, digite uma opção válida");
+            printf("Por gentileza, digite uma opcao valida");
             selecionaModo();
             break;
     }
@@ -54,7 +59,7 @@ void exibeOpcoes()
     printf("\nMuseu Ada Lovelace\n\n");
     
     printf("Obras em cartaz:\n");
-    printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olímpicos Paris 2024; \n4. História da tecnologia;\n0. Sair.\n\n");
+    printf("1. 100 anos da semana da arte moderna; \n2. 150 anos de Santos Dumont; \n3. Jogos olimpicos Paris 2024; \n4. Historia da tecnologia;\n0. Sair.\n\n");
 
     scanf("%d", &opcaoExposicao);
 
@@ -63,22 +68,22 @@ void exibeOpcoes()
     switch(opcaoExposicao)
     {
         case 1:
-            printf("\nExplore a revolução artística da Semana de Arte Moderna de 1922. Descubra obras inovadoras que marcaram o início do movimento modernista no Brasil. Venha vivenciar a transformação cultural que moldou a arte brasileira. \n\n");
+            printf("\nExplore a revolucao artistica da Semana de Arte Moderna de 1922. Descubra obras inovadoras que marcaram o inicio do movimento modernista no Brasil. Venha vivenciar a transformacao cultural que moldou a arte brasileira. \n\n");
             validaDecisaoCompra();
             break;
         
          case 2:
-            printf("\nComemore os 150 anos de Santos Dumont conosco! Conheça a vida e as inovações do pioneiro da aviação brasileira. Visite nossa exposição e celebre o legado de um dos maiores inventores da história. \n\n");
+            printf("\nComemore os 150 anos de Santos Dumont conosco! Conheca a vida e as inovacoes do pioneiro da aviacao brasileira. Visite nossa exposicao e celebre o legado de um dos maiores inventores da historia. \n\n");
             validaDecisaoCompra();
         break;
 
          case 3:
-            printf("\nTestemunhe os melhores atletas do mundo competindo em um dos eventos esportivos mais prestigiados do planeta. Junte-se a nós e faça parte dessa celebração esportiva única. Reserve seu lugar para experienciar a magia olímpica em Paris!\n\n");
+            printf("\nTestemunhe os melhores atletas do mundo competindo em um dos eventos esportivos mais prestigiados do planeta. Junte-se a nos e faca parte dessa celebracao esportiva unica. Reserve seu lugar para experienciar a magia olimpica em Paris!\n\n");
             validaDecisaoCompra();
         break;
 
          case 4:
-            printf("\nViaje pela história da tecnologia conosco! Descubra os avanços revolucionários que moldaram o mundo moderno. Da invenção da roda aos avanços da era digital, explore a evolução que impulsionou a sociedade. \n\n");
+            printf("\nViaje pela historia da tecnologia conosco! Descubra os avancos revolucionarios que moldaram o mundo moderno. Da invencao da roda aos avan�os da era digital, explore a evolucao que impulsionou a sociedade. \n\n");
            validaDecisaoCompra();
         break;
 
@@ -87,7 +92,7 @@ void exibeOpcoes()
         break;
 
         default:
-            printf("Por gentileza, digite uma opção válida");
+            printf("Por gentileza, digite uma opcao valida");
             retornaParaOpcoes();
     }
 }

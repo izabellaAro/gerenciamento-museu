@@ -17,7 +17,7 @@ struct Ingresso {
 };
 
 void compraIngresso(){
-    printf("Qual o tipo de ingresso deseja comprar?\n\n1.Inteira\n2.Meia(estudante/professor/idoso)\n3.Isenção\n\n");
+    printf("Qual o tipo de ingresso deseja comprar?\n\n1.Inteira\n2.Meia(estudante/professor/idoso)\n3.Isencao\n4.Voltar ao menu\n\n");
     scanf("%d", &tipoIngresso);
 
     switch(tipoIngresso){
@@ -35,9 +35,12 @@ void compraIngresso(){
         break;
 
         case 3:
-            printf("Siga com a emissão do seu ingresso e apresente o comprovante de isenção na entrada da exposição escolhida :)");
+            printf("Siga com a emissao do seu ingresso e apresente o comprovante de isencao na entrada da exposicaoo escolhida :)");
             sleep(5);
         break; 
+
+        case 4:
+        retornaParaOpcoes();
     }
  
     gerarIngresso(); 
@@ -48,13 +51,15 @@ void compraIngresso(){
 
 void formaPagamento(){
     system("cls || clear");
-    printf("Selecione a forma de pagamento:\n\n1.Cartão de crédito\n2.Cartão de débito\n\n");
+    printf("Selecione a forma de pagamento:\n\n1.Cartao de credito\n2.Cartaoo de debito\n3.Voltar ao menu\n");
     scanf("%d", &pagamento);
     if(pagamento == 1){
-        printf("\nSiga com o pagamento via cartão de crédito pela máquina de cartões!\n");
+        printf("\nSiga com o pagamento via cartao de credito pela maquina de cartoes!\n");
     }
-    else{
-        printf("\nSiga com o pagamento via cartão de débito pela máquina de cartões!\n");
+    else if (pagamento == 2){
+        printf("\nSiga com o pagamento via cartao de debito pela maquina de cartoes!\n");
+    }else{
+        retornaParaOpcoes();
     }
     sleep(3);
     printf("\nPagamento realizado com sucesso :)");
@@ -92,8 +97,8 @@ void gerarIngresso()
     {
         fclose(arq);
         
-        printf("\nO código do seu ingresso é: %d", codIngresso);
-        printf("\n\nQue a sua visita seja incrível!\n\n");
+        printf("\nO codigo do seu ingresso e: %d", codIngresso);
+        printf("\n\nQue a sua visita seja incrivel!\n\n");
         sleep(2);
     }
     else
@@ -108,7 +113,7 @@ void validaIngresso(int exposicao){
     printf("-- Validador de Ingressos --");
     printf("\n\nPor gentileza, informe seu nome: ");
     scanf("%s", &nomeVisitante);
-    printf("\nInforme o código do ingresso: ");
+    printf("\nInforme o codigo do ingresso: ");
     scanf("%d", &codIngresso);
     
     opcaoExposicao = exposicao;
@@ -137,15 +142,15 @@ void encontrarIngresso(int codIngresso)
 
             if (!ingresso.valido)
             {
-                printf("\nIngresso com o código '%d' invalido.\n", codIngresso);
+                printf("\nIngresso com o codigo '%d' invalido.\n", codIngresso);
             } else if(ingresso.opcaoExposicao != opcaoExposicao) {
-		        printf("\nIngresso com o código '%d' invalido para esta exposicao.\n", codIngresso);
+		        printf("\nIngresso com o codigo '%d' invalido para esta exposicao.\n", codIngresso);
 	        } else {
                 printf("\nIngresso encontrado:\n");
                 printf("Nome: %s\n", ingresso.nome);
                 printf("Ingresso valido?: %d\n", ingresso.valido);
                 printf("Codigo: %d\n", ingresso.codigo);
-                printf("Numero da exposição escolhida: %d\n", opcaoExposicao);
+                printf("Numero da exposicao escolhida: %d\n", opcaoExposicao);
 
                 fseek(arq, sizeof(struct Ingresso)*-1, SEEK_CUR);
 
@@ -159,7 +164,7 @@ void encontrarIngresso(int codIngresso)
 
     if (!encontrado)
     {
-        printf("\nIngresso com o código '%d' não encontrado.\n", codIngresso);
+        printf("\nIngresso com o codigo '%d' nao encontrado.\n", codIngresso);
     }
     fclose(arq);
 }
